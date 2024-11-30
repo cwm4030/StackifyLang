@@ -27,6 +27,7 @@ public enum TokenType
     FnStart,
     End,
     While,
+    Break,
     Then,
     Nil,
     At,

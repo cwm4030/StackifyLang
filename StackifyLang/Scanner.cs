@@ -17,6 +17,7 @@ public class Scanner(string source)
         { "fn", TokenType.Fn },
         { "end", TokenType.End },
         { "while", TokenType.While },
+        { "break", TokenType.Break },
         { "then", TokenType.Then },
         { "nil", TokenType.Nil },
         { "true", TokenType.True },
