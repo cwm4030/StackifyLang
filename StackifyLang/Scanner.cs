@@ -29,7 +29,7 @@ public class Scanner(string source)
         { "print", TokenType.Print },
         { "println", TokenType.Println },
         { "read", TokenType.Read },
-        { "readlin", TokenType.Readln }
+        { "readln", TokenType.Readln }
     };
 
     public List<Token> ScanTokens()
