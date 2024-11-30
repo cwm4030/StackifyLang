@@ -7,6 +7,25 @@ public class Scanner(string source)
     private int _start = 0;
     private int _current = 0;
     private int _line = 1;
+    private static readonly Dictionary<string, TokenType> s_keywords = new()
+    {
+        { "and", TokenType.And },
+        { "or", TokenType.Or },
+        { "if", TokenType.If },
+        { "elif", TokenType.Elif },
+        { "else", TokenType.Else },
+        { "fn", TokenType.Fn },
+        { "end", TokenType.End },
+        { "while", TokenType.While },
+        { "then", TokenType.Then },
+        { "nil", TokenType.Nil },
+        { "true", TokenType.True },
+        { "false", TokenType.False },
+        { "type", TokenType.Type },
+        { "use", TokenType.Use },
+        { "namespace", TokenType.Namespace },
+        { "ret", TokenType.Ret }
+    };
 
     public List<Token> ScanTokens()
     {
@@ -34,7 +53,7 @@ public class Scanner(string source)
                 AddToken(TokenType.Dot);
                 break;
             case '-':
-                AddToken(TokenType.Minus);
+                AddToken(Match('>') ? TokenType.FnStart : TokenType.Minus);
                 break;
             case '+':
                 AddToken(TokenType.Plus);
@@ -54,6 +73,12 @@ public class Scanner(string source)
             case '*':
                 AddToken(TokenType.Star);
                 break;
+            case '@':
+                AddToken(TokenType.At);
+                break;
+            case ':':
+                AddToken(TokenType.Colon);
+                break;
             case '/':
                 if (Match('/'))
                     while (Peek() != '\n' && !IsAtEnd()) Advance();
@@ -71,9 +96,61 @@ public class Scanner(string source)
                 AddStringToken();
                 break;
             default:
-                Stackify.Error(_line, "Unexpected character.");
+                if (IsDigit(c))
+                    AddNumberToken();
+                else if (IsAlpha(c))
+                    AddIdentifierToken();
+                else
+                    Stackify.Error(_line, "Unexpected character.");
                 break;
         }
+    }
+
+    private void AddIdentifierToken()
+    {
+        while (IsAlphaNumeric(Peek())) Advance();
+
+        var identifier = _source[_start.._current];
+        if (s_keywords.TryGetValue(identifier, out var tokenType))
+            AddToken(tokenType);
+        else
+            AddToken(TokenType.Identifier);
+    }
+
+    private static bool IsAlphaNumeric(char c)
+    {
+        return IsAlpha(c) || IsDigit(c);
+    }
+
+    private static bool IsAlpha(char c)
+    {
+        return (c >= 'a' && c <= 'z')
+            || (c >= 'A' && c <= 'Z')
+            || c == '_';
+    }
+
+    private void AddNumberToken()
+    {
+        while (IsDigit(Peek())) Advance();
+
+        bool isFloat = false;
+        if (Peek() == '.' && IsDigit(PeekNext()))
+        {
+            isFloat = true;
+            Advance(); // Consume '.'
+            while (IsDigit(Peek())) Advance();
+        }
+
+        var text = _source[_start.._current];
+        if (isFloat)
+            AddToken(TokenType.Float, double.Parse(text));
+        else
+            AddToken(TokenType.Integer, int.Parse(text));
+    }
+
+    private static bool IsDigit(char c)
+    {
+        return c >= '0' && c <= '9';
     }
 
     // Todo: Add support for escape sequences like '\n'
@@ -103,6 +180,12 @@ public class Scanner(string source)
     {
         if (IsAtEnd()) return '\0';
         return _source[_current];
+    }
+
+    private char PeekNext()
+    {
+        if (_current + 1 >= _source.Length) return '\0';
+        return _source[_current + 1];
     }
 
     private char Advance()
