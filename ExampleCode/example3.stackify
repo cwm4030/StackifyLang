@@ -1,0 +1,24 @@
+use std.io
+
+namespace example3
+
+fn guess_age @age ->
+    0 @wrong
+    while wront 10 < then
+        "Enter a guess for my age:" println
+        readln int.parse @guess
+
+        if guess age = then
+            "Congrats, you guessed correct!" println
+            break
+        else
+            wrong 1 + @wrong
+        end
+    end
+
+    "You guessed wrong " wrong int.to_string string.concat
+    " times." string.concat
+    println
+end
+
+40 guess_age

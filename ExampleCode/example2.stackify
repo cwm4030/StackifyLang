@@ -1,0 +1,21 @@
+type Person ->
+    :name
+    :age
+
+    fn init @n @a ->
+        Person.new @p
+        n @p.name
+        a @p.age
+        p
+    end
+
+    fn greet @p ->
+        "Hello, my name is " p.name string.concat
+        " and I am " p.age int.to_string string.concat
+        " years old. It is nice to meet you." string.concat
+        println
+    end
+end
+
+"John Doe" 40 Person.init @p
+p Person.greet

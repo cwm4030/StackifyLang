@@ -24,3 +24,58 @@ end
 
 4 square nth_fibonacci int.to_string print
 ```
+
+```
+use std.io
+
+namespace example2
+
+type Person ->
+    :name
+    :age
+
+    fn init @n @a ->
+        Person.new @p
+        n @p.name
+        a @p.age
+        p
+    end
+
+    fn greet @p ->
+        "Hello, my name is " p.name string.concat
+        " and I am " p.age int.to_string string.concat
+        " years old. It is nice to meet you." string.concat
+        println
+    end
+end
+
+"John Doe" 40 Person.init @p
+p Person.greet
+```
+
+```
+use std.io
+
+namespace example3
+
+fn guess_age @age ->
+    0 @wrong
+    while wrong 10 < then
+        "Enter a guess for my age:" println
+        readln int.parse @guess
+
+        if guess age = then
+            "Congrats, you guessed correct!" println
+            break
+        else
+            wrong 1 + @wrong
+        end
+    end
+
+    "You guessed wrong " wrong int.to_string string.concat
+    " times." string.concat
+    println
+end
+
+40 guess_age
+```
