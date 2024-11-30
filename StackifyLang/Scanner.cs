@@ -95,7 +95,7 @@ public class Scanner(string source)
         Advance();
 
         // Trim the surrounding quotes
-        string value = _source.Substring(_start + 1, _current - 1);
+        var value = _source[(_start + 1)..(_current - 1)];
         AddToken(TokenType.String, value);
     }
 
@@ -107,8 +107,9 @@ public class Scanner(string source)
 
     private char Advance()
     {
+        var c = _source[_current];
         _current += 1;
-        return _source[_current];
+        return c;
     }
 
     private void AddToken(TokenType type)
@@ -118,7 +119,7 @@ public class Scanner(string source)
 
     private void AddToken(TokenType type, object? literal)
     {
-        var text = _source.Substring(_start, _current);
+        var text = _source[_start.._current];
         _tokens.Add(new Token
         {
             Type = type,

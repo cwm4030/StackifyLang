@@ -24,6 +24,7 @@ public static class Stackify
     public static void RunFile(string filePath)
     {
         var source = File.ReadAllText(filePath);
+        Run(source);
     }
 
     public static void RunPrompt()
@@ -31,8 +32,9 @@ public static class Stackify
         while (true)
         {
             Console.Write("> ");
-            var input = Console.ReadLine();
-            if (input == null) break;
+            var input = Console.ReadLine() ?? string.Empty;
+            if (input == "quit") break;
+            Run(input);
         }
     }
 
