@@ -1,0 +1,17 @@
+use std.io
+
+namespace example1
+
+fn nth_fibonacci @n ->
+    if n 1 <= then
+        0
+    else
+        n 1 - nth_fibonacci n 2 - nth_fibonacci +
+    end
+end
+
+fn square @x ->
+    x x *
+end
+
+4 square nth_fibonacci int.to_string print
