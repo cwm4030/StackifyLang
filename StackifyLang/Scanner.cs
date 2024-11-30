@@ -24,7 +24,12 @@ public class Scanner(string source)
         { "type", TokenType.Type },
         { "use", TokenType.Use },
         { "namespace", TokenType.Namespace },
-        { "ret", TokenType.Ret }
+        { "ret", TokenType.Ret },
+        { "new", TokenType.New },
+        { "print", TokenType.Print },
+        { "println", TokenType.Println },
+        { "read", TokenType.Read },
+        { "readlin", TokenType.Readln }
     };
 
     public List<Token> ScanTokens()
