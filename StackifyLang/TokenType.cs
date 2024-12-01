@@ -24,7 +24,7 @@ public enum TokenType
     Elif,
     Else,
     Fn,
-    FnStart,
+    BlockStart,
     End,
     While,
     Break,

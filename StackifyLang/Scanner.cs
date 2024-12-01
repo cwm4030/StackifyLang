@@ -59,7 +59,7 @@ public class Scanner(string source)
                 AddToken(TokenType.Dot);
                 break;
             case '-':
-                AddToken(Match('>') ? TokenType.FnStart : TokenType.Minus);
+                AddToken(Match('>') ? TokenType.BlockStart : TokenType.Minus);
                 break;
             case '+':
                 AddToken(TokenType.Plus);
