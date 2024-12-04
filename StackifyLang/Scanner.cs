@@ -30,7 +30,13 @@ public class Scanner(string source)
         { "print", TokenType.Print },
         { "println", TokenType.Println },
         { "read", TokenType.Read },
-        { "readln", TokenType.Readln }
+        { "readln", TokenType.Readln },
+        { "call", TokenType.Call },
+        { "quote", TokenType.Quote },
+        { "dup", TokenType.Dup },
+        { "swap", TokenType.Swap },
+        { "concat", TokenType.Concat },
+        { "drop", TokenType.Drop }
     };
 
     public List<Token> ScanTokens()
@@ -55,36 +61,18 @@ public class Scanner(string source)
         char c = Advance();
         switch (c)
         {
-            case '.':
-                AddToken(TokenType.Dot);
-                break;
-            case '-':
-                AddToken(Match('>') ? TokenType.BlockStart : TokenType.Minus);
-                break;
-            case '+':
-                AddToken(TokenType.Plus);
-                break;
-            case '!':
-                AddToken(Match('=') ? TokenType.BangEqual : TokenType.Bang);
-                break;
-            case '=':
-                AddToken(TokenType.Equal);
-                break;
-            case '<':
-                AddToken(Match('=') ? TokenType.LessEqual : TokenType.Less);
-                break;
-            case '>':
-                AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater);
-                break;
-            case '*':
-                AddToken(TokenType.Star);
-                break;
-            case '@':
-                AddToken(TokenType.At);
-                break;
-            case ':':
-                AddToken(TokenType.Colon);
-                break;
+            case '.': AddToken(TokenType.Dot); break;
+            case '-': AddToken(Match('>') ? TokenType.BlockStart : TokenType.Minus); break;
+            case '+': AddToken(TokenType.Plus); break;
+            case '!': AddToken(Match('=') ? TokenType.BangEqual : TokenType.Bang); break;
+            case '=': AddToken(TokenType.Equal); break;
+            case '<': AddToken(Match('=') ? TokenType.LessEqual : TokenType.Less); break;
+            case '>': AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater); break;
+            case '*': AddToken(TokenType.Star); break;
+            case '@': AddToken(TokenType.At); break;
+            case ':': AddToken(TokenType.Colon); break;
+            case '[': AddToken(TokenType.BracketOpen); break;
+            case ']': AddToken(TokenType.BracketClose); break;
             case '/':
                 if (Match('/'))
                     while (Peek() != '\n' && !IsAtEnd()) Advance();
@@ -98,9 +86,7 @@ public class Scanner(string source)
             case '\n':
                 _line += 1;
                 break;
-            case '"':
-                AddStringToken();
-                break;
+            case '"': AddStringToken(); break;
             default:
                 if (IsDigit(c))
                     AddNumberToken();
