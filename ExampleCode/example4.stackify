@@ -1,0 +1,26 @@
+use std.io
+
+namespace example4
+
+fn make_counter @start ->
+    start @i
+    [@inc -> i inc + @i i print]
+end
+
+2 make_counter @counter
+1 count call // 3
+4 count call // 7
+
+// equavalent to the above code
+fn make_counter1 @start ->
+    start @i
+    fn count @inc ->
+        i inc + @i i print
+    end
+    // anon fn with no paramaters
+    [:count]
+end
+
+2 make_counter1 @counter
+1 count call // 3
+4 count call // 7
