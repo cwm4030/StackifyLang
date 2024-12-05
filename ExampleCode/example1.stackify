@@ -4,7 +4,7 @@ namespace example1
 
 fn nth_fibonacci @n ->
     if n 1 <= then
-        0
+        n
     else
         n 1 - nth_fibonacci n 2 - nth_fibonacci +
     end

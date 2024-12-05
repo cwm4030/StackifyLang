@@ -12,7 +12,7 @@ namespace example1
 
 fn nth_fibonacci @n ->
     if n 1 <= then
-        0
+        n
     else
         n 1 - nth_fibonacci n 2 - nth_fibonacci +
     end
@@ -92,8 +92,8 @@ fn make_counter @start ->
 end
 
 2 make_counter @counter
-1 count call // 3
-4 count call // 7
+1 counter call // 3
+4 counter call // 7
 
 // equavalent to the above code
 fn make_counter1 @start ->
@@ -106,6 +106,6 @@ fn make_counter1 @start ->
 end
 
 2 make_counter1 @counter
-1 count call // 3
-4 count call // 7
+1 counter call // 3
+4 counter call // 7
 ```
