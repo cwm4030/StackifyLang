@@ -8,9 +8,10 @@
 * **stmt** -> '+' | '-' | '*' | '/' | '<' | '>' | '=' | '!' | '!=' | '<=' | '>=' | literal | identifier_stmt
             | var_def | 'ret' | 'print' | 'println' | 'read' | 'readln' | 'call' | 'quote' | 'dup' | 'swap' | 'concat' | 'drop'
             | anon_fn | if_stmt | while_stmt
-* **anon_fn** -> '[' (var_def* '->' | ':') stmt* ']'
-* **if_stmt** -> 'if' stmt* 'then' stmt* ('elif' stmt* 'then' stmt*)* ('else' stmt*)? 'end'
-* **while_stmt** -> 'while' stmt* 'then' stmt* 'end'
-* **fn_def** -> 'fn' IDENTIFIER var_def* '->' stmt* 'end'
+* **block_stmt** -> stmt*
+* **anon_fn** -> '[' (var_def* '->' | ':') block_stmt ']'
+* **if_stmt** -> 'if' block_stmt 'then' block_stmt ('elif' block_stmt 'then' block_stmt)* ('else' block_stmt)? 'end'
+* **while_stmt** -> 'while' block_stmt 'then' block_stmt 'end'
+* **fn_def** -> 'fn' IDENTIFIER var_def* '->' block_stmt 'end'
 * **type_def** -> 'type' IDENTIFIER '->' (prop_def | fn_def)* 'end'
 * **program** -> use_stmt* namespace_stmt? (fn_def | type_def | stmt)*
