@@ -54,6 +54,14 @@ public static class Stackify
         Report(line, string.Empty, message);
     }
 
+    public static void Error(Token token, string message)
+    {
+        if (token.Type == TokenType.Eof)
+            Report(token.Line, " at end", message);
+        else
+            Report(token.Line, $" at '{token.Lexeme}'", message);
+    }
+
     private static void Report(int line, string where, string message)
     {
         Console.WriteLine($"[line {line}] Error {where}: {message}");
