@@ -32,10 +32,8 @@ public class Scanner(string source)
         { "read", TokenType.Read },
         { "readln", TokenType.Readln },
         { "call", TokenType.Call },
-        { "quote", TokenType.Quote },
         { "dup", TokenType.Dup },
         { "swap", TokenType.Swap },
-        { "concat", TokenType.Concat },
         { "drop", TokenType.Drop }
     };
 

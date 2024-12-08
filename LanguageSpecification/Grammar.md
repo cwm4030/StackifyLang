@@ -1,17 +1,25 @@
 # Stackify Grammar
-* **literal** -> INTEGER | FLOAT | STRING | 'true' | 'false' | 'nil'
-* **var_def** -> '@' IDENTIFIER
-* **prop_def** -> ':' IDENTIFIER
-* **identifier_stmt** -> IDENTIFIER ('.' IDENTIFIER)*
+* **numeric_literal** -> INTEGER | FLOAT
+* **bool_literal** -> 'true' | 'false'
+* **literal_stmt** -> numeric_literal | bool_literal | STRING | 'nil'
+* **numeric_op_stmt** -> '+' | '-' | '*' | '/' | '~'
+* **cond_op_stmt** -> '<' | '>' | '=' | '!' | '!=' | '<=' | '>=' | 'or' | 'and'
+* **stack_op_stmt** -> 'dup' | 'swap' | 'drop'
+* **op_stmt** -> numeric_op_stmt | cond_op_stmt | stack_op_stmt
+* **io_stmt** -> 'print' | 'println' | 'read' | 'readln'
+* **identifier_stmt** -> (IDENTIFIER ('.' IDENTIFIER)*) | io_stmt
+* **call_stmt** -> 'call'
+* **ret_stmt** -> 'ret'
+* **break_stmt** -> 'break'
+* **variable_stmt** -> '@' IDENTIFIER
+* **property_stmt** -> ':' IDENTIFIER
+* **stmt** -> literal_stmt | op_stmt | identifier_stmt | variable_stmt | if_stmt | while_stmt | anon_fn_stmt | call_stmt
+* **branch_stmt** -> (literal_stmt | op_stmt | identifier_stmt | anon_fn_stmt)* (bool_literal | cond_op_stmt | identifier_stmt | call_stmt)
+* **if_stmt** -> 'if' branch_stmt 'then' stmt* ('elif' branch_stmt 'then' stmt*)* ('else' stmt*)? 'end'
+* **while_stmt** -> 'while' branch_stmt 'then' (stmt | break_stmt)* 'end'
+* **fn_stmt** -> 'fn' IDENTIFIER variable_stmt* '->' (stmt | ret_stmt)* 'end'
+* **anon_fn_stmt** -> '[' (variable_stmt* '->' | ':') (stmt | ret_stmt)* ']'
+* **type_stmt** -> 'type' IDENTIFIER '->' (property_stmt | fn_stmt)* 'end'
 * **use_stmt** -> 'use' identifier_stmt
 * **namespace_stmt** -> 'namespace' identifier_stmt
-* **stmt** -> '+' | '-' | '*' | '/' | '<' | '>' | '=' | '!' | '!=' | '<=' | '>=' | literal | identifier_stmt
-            | var_def | 'ret' | 'print' | 'println' | 'read' | 'readln' | 'call' | 'quote' | 'dup' | 'swap' | 'concat' | 'drop'
-            | anon_fn | if_stmt | while_stmt
-* **block_stmt** -> stmt*
-* **anon_fn** -> '[' (var_def* '->' | ':') block_stmt ']'
-* **if_stmt** -> 'if' block_stmt 'then' block_stmt ('elif' block_stmt 'then' block_stmt)* ('else' block_stmt)? 'end'
-* **while_stmt** -> 'while' block_stmt 'then' block_stmt 'end'
-* **fn_def** -> 'fn' IDENTIFIER var_def* '->' block_stmt 'end'
-* **type_def** -> 'type' IDENTIFIER '->' (prop_def | fn_def)* 'end'
-* **program** -> use_stmt* namespace_stmt? (fn_def | type_def | stmt)*
+* **program** -> use_stmt* namespace_stmt? (fn_stmt | type_stmt | stmt)*

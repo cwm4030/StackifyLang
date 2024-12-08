@@ -46,10 +46,8 @@ public enum TokenType
     Namespace,
     Ret,
     Call,
-    Quote,
     Dup,
     Swap,
-    Concat,
     Drop,
     Eof,
 }
